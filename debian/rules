@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+
+include /usr/share/openstack-pkg-tools/pkgos.make
+
+%:
+	dh $@ --buildsystem=python_distutils --with python3,sphinxdoc
+
+override_dh_auto_clean:
+	rm -rf build
+	find . -iname '*.pyc' -delete
+	for i in $$(find . -type d -iname __pycache__) ; do rm -rf $$i ; done
+
+override_dh_auto_build:
+	echo "Do nothing..."
+
+override_dh_auto_install:
+	pkgos-dh_auto_install --no-py2 --in-tmp
+
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+override_dh_auto_test:
+	set -e && for pyvers in $(PYTHON3S); do \
+		python$$pyvers setup.py test ; \
+	done
+endif
+
+override_dh_sphinxdoc:
+	python3 -m sphinx -b html doc debian/python-logutils-doc/usr/share/doc/python-logutils-doc/html
+	dh_sphinxdoc -O--buildsystem=python_distutils

@@ -1,0 +1,58 @@
+Description: fix-_levelNames-vs-_levelToName.patch
+ In Python 3.4, _levelNames is now levelToName. This patch tries both.
+Author: Thomas Goirand <zigo@debian.org>
+Forwarded: no
+Last-Update: 2014-08-04
+
+--- python-logutils-0.3.3.orig/logutils/dictconfig.py
++++ python-logutils-0.3.3/logutils/dictconfig.py
+@@ -33,9 +33,13 @@ except ImportError:
+         if isinstance(level, int):
+             rv = level
+         elif str(level) == level:
+-            if level not in logging._levelNames:
++            try:
++                levelnames = logging._levelNames
++            except:
++                levelnames = logging._levelToName
++            if level not in levelnames:
+                 raise ValueError('Unknown level: %r' % level)
+-            rv = logging._levelNames[level]
++            rv = levelnames[level]
+         else:
+             raise TypeError('Level not an integer or a '
+                             'valid string: %r' % level)
+--- python-logutils-0.3.3.orig/tests/test_dictconfig.py
++++ python-logutils-0.3.3/tests/test_dictconfig.py
+@@ -13,6 +13,11 @@ try:
+ except NameError:
+     StandardError = Exception
+ 
++try:
++    levelnames = logging._levelNames
++except:
++    levelnames = logging._levelToName
++
+ class ExceptionFormatter(logging.Formatter):
+     """A special exception formatter."""
+     def formatException(self, ei):
+@@ -44,7 +49,7 @@ class ConfigDictTest(unittest.TestCase):
+             self.saved_handlers = logging._handlers.copy()
+             self.saved_handler_list = logging._handlerList[:]
+             self.saved_loggers = logger_dict.copy()
+-            self.saved_level_names = logging._levelNames.copy()
++            self.saved_level_names = levelnames.copy()
+         finally:
+             logging._releaseLock()
+ 
+@@ -56,8 +61,8 @@ class ConfigDictTest(unittest.TestCase):
+         self.root_logger.setLevel(self.original_logging_level)
+         logging._acquireLock()
+         try:
+-            logging._levelNames.clear()
+-            logging._levelNames.update(self.saved_level_names)
++            levelnames.clear()
++            levelnames.update(self.saved_level_names)
+             logging._handlers.clear()
+             logging._handlers.update(self.saved_handlers)
+             logging._handlerList[:] = self.saved_handler_list

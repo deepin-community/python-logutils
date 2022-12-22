@@ -1,0 +1,21 @@
+Description: Test failures should be fatal to the build process
+Author: Liam Young <liam.young@canonical.com>
+Bug-Ubuntu: https://launchpad.net/bugs/1319909
+Forwarded: https://bitbucket.org/vinay.sajip/logutils/pull-request/1/fix-python3-tests-and-make-test-failures/diff
+Last-Update: 2014-07-04
+
+Index: python-logutils/setup.py
+===================================================================
+--- python-logutils.orig/setup.py
++++ python-logutils/setup.py
+@@ -27,7 +27,9 @@ class TestCommand(distutils.core.Command
+         import logutil_tests
+         loader = unittest.TestLoader()
+         runner = unittest.TextTestRunner()
+-        runner.run(loader.loadTestsFromModule(logutil_tests))
++        test_results = runner.run(loader.loadTestsFromModule(logutil_tests))
++        if not test_results.wasSuccessful():
++            sys.exit(1)
+ 
+     def initialize_options(self):
+         pass

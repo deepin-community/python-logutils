@@ -1,0 +1,50 @@
+Source: python-logutils
+Section: python
+Priority: optional
+Maintainer: Debian OpenStack <team+openstack@tracker.debian.org>
+Uploaders:
+ Thomas Goirand <zigo@debian.org>,
+Build-Depends:
+ debhelper-compat (= 11),
+ dh-python,
+ openstack-pkg-tools (>= 99~),
+ python3-all,
+ python3-setuptools,
+ python3-sphinx,
+Standards-Version: 4.4.0
+Vcs-Browser: https://salsa.debian.org/openstack-team/python/python-logutils
+Vcs-Git: https://salsa.debian.org/openstack-team/python/python-logutils.git
+Homepage: https://bitbucket.org/vinay.sajip/logutils/
+
+Package: python-logutils-doc
+Architecture: all
+Section: doc
+Depends:
+ ${misc:Depends},
+ ${sphinxdoc:Depends},
+Description: handlers for the Python standard library's logging package - docs
+ The logutils package provides a set of handlers for the Python standard
+ library's logging package.
+ .
+ Some of these handlers are out-of-scope for the standard library, and so they
+ are packaged here. Others are updated versions which have appeared in recent
+ Python releases, but are usable with older versions of Python and so are
+ packaged here.
+ .
+ This package contains the documentation.
+
+Package: python3-logutils
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+Description: handlers for the Python standard library's logging package - Python 3.x
+ The logutils package provides a set of handlers for the Python standard
+ library's logging package.
+ .
+ Some of these handlers are out-of-scope for the standard library, and so they
+ are packaged here. Others are updated versions which have appeared in recent
+ Python releases, but are usable with older versions of Python and so are
+ packaged here.
+ .
+ This package contains the Python 3.x module.

@@ -1,0 +1,66 @@
+python-logutils (0.3.3-8) unstable; urgency=medium
+
+  * Add no-u-in-python3.9.patch (Closes: #997523).
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 26 Oct 2021 11:28:02 +0200
+
+python-logutils (0.3.3-7) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * Changed upstream homepage to bitbucket.org
+  * d/control: Use team+openstack@tracker.debian.org as maintainer
+  * Use 'python3 -m sphinx' instead of sphinx-build for building docs
+  * Use debhelper-compat instead of debian/compat.
+  * d/control: Set Vcs-* to salsa.debian.org
+  * d/watch: Use https protocol
+
+  [ Daniel Baumann ]
+  * Updating vcs fields.
+  * Updating copyright format url.
+  * Updating maintainer field.
+  * Running wrap-and-sort -bast.
+  * Removing gbp.conf, not used anymore or should be specified in the
+    developers dotfiles.
+
+  [ Thomas Goirand ]
+  * Removed Python 2 support (Closes: #937899).
+  * Bump debhelper-compat to 11.
+  * Updating standards version to 4.4.0.
+  * Fixed d/copyright ordering and years.
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 24 Dec 2019 23:45:39 +0100
+
+python-logutils (0.3.3-5) unstable; urgency=medium
+
+  * Added Ubuntu patch: test-failures-fatal.patch (Closes: #791804).
+  * Fixed watch file to use the PyPi redirector.
+  * Usual clean-up in debian/control (Standards-Version, Uploaders,
+    dh-python, python-all version...).
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 28 Aug 2015 15:37:45 +0000
+
+python-logutils (0.3.3-4) unstable; urgency=medium
+
+  * Fixed typo in package description (Closes: #782527).
+
+ -- Thomas Goirand <zigo@debian.org>  Tue, 12 May 2015 23:29:42 +0200
+
+python-logutils (0.3.3-3) unstable; urgency=medium
+
+  * Fixed VCS URLs.
+
+ -- Thomas Goirand <zigo@debian.org>  Wed, 06 May 2015 11:13:10 +0200
+
+python-logutils (0.3.3-2) unstable; urgency=medium
+
+  * Fixed Vcs-Git URL.
+  * Added debian/python-logutils-doc.doc-base.
+  * Added patch to rename _levelNames into _levelToName
+
+ -- Thomas Goirand <zigo@debian.org>  Sun, 03 Aug 2014 17:05:12 +0000
+
+python-logutils (0.3.3-1) unstable; urgency=medium
+
+  * Initial release. (Closes: #734687)
+
+ -- Thomas Goirand <zigo@debian.org>  Thu, 09 Jan 2014 14:31:16 +0800

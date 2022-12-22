@@ -1,0 +1,9 @@
+Document: python-logutils-doc
+Title: Logutils Documentation
+Author: Vinay Sajip
+Abstract: Sphinx documentation for Logutils
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/python-logutils-doc/html/index.html
+Files: /usr/share/doc/python-logutils-doc/html/*

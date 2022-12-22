@@ -1,0 +1,4 @@
+no-network-access-during-doc-build.patch
+test-failures-fatal.patch
+fix-_levelNames-vs-_levelToName.patch
+no-u-in-python-3.9.patch
