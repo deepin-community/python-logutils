@@ -7,10 +7,10 @@ import re
 
 
 def description():
-    f = open(join(dirname(__file__), 'README.txt'))
+    f = open(join(dirname(__file__), 'README.rst'))
     readme = f.read()
     f.close()
-    regexp = r'^logutils\s*[\d.]*\s*\n=======+\s*\n(.*)Requirements '
+    regexp = r'logutils\s*[\d.]*\s*\n=======+\s*\n(.*)Requirements '
     reqts, = re.findall(regexp, readme, re.DOTALL)
     regexp = r'Availability & Documentation\s*\n-----+\s*\n(.*)'
     avail, = re.findall(regexp, readme, re.DOTALL)
@@ -22,12 +22,14 @@ class TestCommand(distutils.core.Command):
     def run(self):
         import sys
         import unittest
-        
+
         sys.path.append(join(dirname(__file__), 'tests'))
         import logutil_tests
         loader = unittest.TestLoader()
         runner = unittest.TextTestRunner()
-        runner.run(loader.loadTestsFromModule(logutil_tests))
+        test_results = runner.run(loader.loadTestsFromModule(logutil_tests))
+        if not test_results.wasSuccessful():
+            sys.exit(1)
 
     def initialize_options(self):
         pass
@@ -43,7 +45,7 @@ distutils.core.setup(
     url='http://code.google.com/p/logutils/',
     description='Logging utilities',
     long_description = description(),
-    license='Copyright (C) 2010-2013 by Vinay Sajip. All Rights Reserved. See LICENSE.txt for license.',
+    license='Copyright (C) 2010-2017 by Vinay Sajip. All Rights Reserved. See LICENSE.txt for license.',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
@@ -59,5 +61,5 @@ distutils.core.setup(
     cmdclass={
         'test': TestCommand,
     },
-    
+
 )

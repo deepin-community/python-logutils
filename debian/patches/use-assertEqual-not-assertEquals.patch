@@ -1,0 +1,26 @@
+Description: Use assertEqual not assertEquals
+Author: Thomas Goirand <zigo@debian.org>
+Bug-Debian: https://bugs.debian.org/1058171
+Forwarded: no
+Last-Update: 2023-12-13
+
+--- python-logutils-0.3.5.orig/tests/test_dictconfig.py
++++ python-logutils-0.3.5/tests/test_dictconfig.py
+@@ -568,7 +568,7 @@ class ConfigDictTest(unittest.TestCase):
+             raise RuntimeError()
+         except RuntimeError:
+             logging.exception("just testing")
+-        self.assertEquals(h.formatted[0],
++        self.assertEqual(h.formatted[0],
+             "ERROR:root:just testing\nGot a [RuntimeError]")
+ 
+     def test_config4a_ok(self):
+@@ -580,7 +580,7 @@ class ConfigDictTest(unittest.TestCase):
+             raise RuntimeError()
+         except RuntimeError:
+             logging.exception("just testing")
+-        self.assertEquals(h.formatted[0],
++        self.assertEqual(h.formatted[0],
+             "ERROR:root:just testing\nGot a [RuntimeError]")
+ 
+     def test_config5_ok(self):

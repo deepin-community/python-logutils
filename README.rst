@@ -1,4 +1,10 @@
-logutils 0.3.3
+.. image:: https://travis-ci.org/vsajip/logutils.svg
+   :target: https://travis-ci.org/vsajip/logutils
+
+.. image:: https://coveralls.io/repos/vsajip/logutils/badge.svg
+   :target: https://coveralls.io/github/vsajip/logutils
+
+logutils 0.3.4
 ==============
 The logutils package provides a set of handlers for the Python standard
 library's logging package.
@@ -18,12 +24,18 @@ installed with the standard Python installation procedure:
 There is a set of unit tests which you can invoke with
 
   python setup.py test
-  
+
 before running the installation.
 
 Availability & Documentation
 ----------------------------
-The latest version of logutils can be found at:
 
-  http://code.google.com/p/logutils/
+The source code repository is at:
 
+https://bitbucket.org/vinay.sajip/logutils/
+
+Documentation is available at:
+
+https://logutils.readthedocs.io/
+
+https://pythonhosted.org/logutils/

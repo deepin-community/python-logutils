@@ -1,5 +1,5 @@
 #
-# Copyright 2009-2013 by Vinay Sajip. See LICENSE.txt for details.
+# Copyright 2009-2017 by Vinay Sajip. See LICENSE.txt for details.
 #
 import logging
 from logutils.adapter import LoggerAdapter
@@ -44,7 +44,11 @@ class ConfigDictTest(unittest.TestCase):
             self.saved_handlers = logging._handlers.copy()
             self.saved_handler_list = logging._handlerList[:]
             self.saved_loggers = logger_dict.copy()
-            self.saved_level_names = logging._levelNames.copy()
+            if hasattr(logging, '_levelNames'):
+                self.saved_level_names = logging._levelNames.copy()
+            else:
+                self.saved_level_to_name = logging._levelToName.copy()
+                self.saved_name_to_level = logging._nameToLevel.copy()
         finally:
             logging._releaseLock()
 
@@ -56,8 +60,14 @@ class ConfigDictTest(unittest.TestCase):
         self.root_logger.setLevel(self.original_logging_level)
         logging._acquireLock()
         try:
-            logging._levelNames.clear()
-            logging._levelNames.update(self.saved_level_names)
+            if hasattr(logging, '_levelNames'):
+                logging._levelNames.clear()
+                logging._levelNames.update(self.saved_level_names)
+            else:
+                logging._levelToName.clear()
+                logging._levelToName.update(self.saved_level_to_name)
+                logging._nameToLevel.clear()
+                logging._nameToLevel.update(self.saved_name_to_level)
             logging._handlers.clear()
             logging._handlers.update(self.saved_handlers)
             logging._handlerList[:] = self.saved_handler_list
@@ -118,7 +128,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'WARNING',
         },
-    } 
+    }
 
     # config2 has a subtle configuration error that should be reported
     config2 = {
@@ -144,7 +154,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'WARNING',
         },
-    } 
+    }
 
     #As config1 but with a misspelt level on a handler
     config2a = {
@@ -170,7 +180,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'WARNING',
         },
-    } 
+    }
 
 
     #As config1 but with a misspelt level on a logger
@@ -197,7 +207,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'WRANING',
         },
-    } 
+    }
 
     # config3 has a less subtle configuration error
     config3 = {
@@ -223,7 +233,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'WARNING',
         },
-    } 
+    }
 
     # config4 specifies a custom formatter class to be loaded
     config4 = {
@@ -244,7 +254,7 @@ class ConfigDictTest(unittest.TestCase):
             'level' : 'NOTSET',
                 'handlers' : ['hand1'],
         },
-    } 
+    }
 
     # As config4 but using an actual callable rather than a string
     config4a = {
@@ -276,7 +286,7 @@ class ConfigDictTest(unittest.TestCase):
             'level' : 'NOTSET',
                 'handlers' : ['hand1'],
         },
-    } 
+    }
 
     # config5 specifies a custom handler class to be loaded
     config5 = {
@@ -301,7 +311,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'WARNING',
         },
-    } 
+    }
 
     # config6 specifies a custom handler class to be loaded
     # but has bad arguments
@@ -329,7 +339,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'WARNING',
         },
-    } 
+    }
 
     #config 7 does not define compiler.parser but defines compiler.lexer
     #so compiler.parser should be disabled after applying it
@@ -355,7 +365,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'WARNING',
         },
-    } 
+    }
 
     config8 = {
         'version': 1,
@@ -382,7 +392,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'WARNING',
         },
-    } 
+    }
 
     config9 = {
         'version': 1,
@@ -406,7 +416,7 @@ class ConfigDictTest(unittest.TestCase):
         'root' : {
             'level' : 'NOTSET',
         },
-    } 
+    }
 
     config9a = {
         'version': 1,
@@ -421,7 +431,7 @@ class ConfigDictTest(unittest.TestCase):
                 'level' : 'INFO',
             },
         },
-    } 
+    }
 
     config9b = {
         'version': 1,
@@ -436,7 +446,7 @@ class ConfigDictTest(unittest.TestCase):
                 'level' : 'INFO',
             },
         },
-    } 
+    }
 
     #As config1 but with a filter added
     config10 = {
@@ -468,7 +478,7 @@ class ConfigDictTest(unittest.TestCase):
             'level' : 'WARNING',
             'handlers' : ['hand1'],
         },
-    } 
+    }
 
     # As config10, but declaring a handler in a module using
     # absolute imports
@@ -501,7 +511,7 @@ class ConfigDictTest(unittest.TestCase):
             'level' : 'WARNING',
             'handlers' : ['hand1'],
         },
-    } 
+    }
 
     def apply_config(self, conf):
         dictConfig(conf)
@@ -679,10 +689,9 @@ class ConfigDictTest(unittest.TestCase):
                             dict(levelname='WARNING', message='1'),
                             dict(levelname='ERROR', message='4'),
                         ]))
- 
+
     def test_config_11_ok(self):
         self.apply_config(self.config11)
         h = logging.getLogger().handlers[0]
         self.assertEqual(h.__module__, 'mytest')
         self.assertEqual(h.__class__.__name__, 'MyTestHandler')
-
