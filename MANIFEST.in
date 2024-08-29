@@ -1,0 +1,9 @@
+include README.rst
+include LICENSE.txt
+include NEWS.txt
+include doc/*.html
+include doc/*.rst
+include doc/conf.py
+include doc/Makefile
+include tests/*.py
+

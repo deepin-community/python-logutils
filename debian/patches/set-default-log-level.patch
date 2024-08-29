@@ -1,0 +1,16 @@
+Description: Set default log level for tests
+Author: Thomas Goirand <zigo@debian.org>
+Bug-Debian: https://bugs.debian.org/1027512
+Forwarded: no
+Last-Update: 2023-01-04
+
+--- python-logutils-0.3.5.orig/tests/test_adapter.py
++++ python-logutils-0.3.5/tests/test_adapter.py
+@@ -10,6 +10,7 @@ class AdapterTest(unittest.TestCase):
+     def setUp(self):
+         self.handler = h = TestHandler(Matcher())
+         self.logger = l = logging.getLogger()
++        self.logger.setLevel(logging.WARNING)
+         l.addHandler(h)
+         self.adapter = LoggerAdapter(l, {})
+ 

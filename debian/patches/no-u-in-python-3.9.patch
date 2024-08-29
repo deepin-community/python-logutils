@@ -8,18 +8,18 @@ Index: python-logutils/doc/conf.py
 ===================================================================
 --- python-logutils.orig/doc/conf.py
 +++ python-logutils/doc/conf.py
-@@ -41,8 +41,8 @@ source_suffix = '.rst'
+@@ -41,8 +41,8 @@
  master_doc = 'index'
  
  # General information about the project.
 -project = u'Logutils'
--copyright = u'2010-2013, Vinay Sajip'
+-copyright = u'2010-2017, Vinay Sajip'
 +project = 'Logutils'
-+copyright = '2010-2013, Vinay Sajip'
++copyright = '2010-2017, Vinay Sajip'
  
  # The version info for the project you're documenting, acts as replacement for
  # |version| and |release|, also used in various other places throughout the
-@@ -168,8 +168,8 @@ htmlhelp_basename = 'Logutilsdoc'
+@@ -171,8 +171,8 @@
  # Grouping the document tree into LaTeX files. List of tuples
  # (source start file, target name, title, author, document class [howto/manual]).
  latex_documents = [

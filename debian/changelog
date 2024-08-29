@@ -1,3 +1,26 @@
+python-logutils (0.3.5-3) unstable; urgency=medium
+
+  * Add use-assertEqual-not-assertEquals.patch (Closes: #1058171).
+
+ -- Thomas Goirand <zigo@debian.org>  Wed, 13 Dec 2023 23:35:10 +0100
+
+python-logutils (0.3.5-2) unstable; urgency=medium
+
+  * Cleans better (Closes: #1046710).
+
+ -- Thomas Goirand <zigo@debian.org>  Fri, 18 Aug 2023 10:24:08 +0200
+
+python-logutils (0.3.5-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Removed obsolete patches:
+    - fix-_levelNames-vs-_levelToName.patch
+    - test-failures-fatal.patch
+  * Rebased no-u-in-python-3.9.patch.
+  * Add set-default-log-level.patch (Closes: #1027512).
+
+ -- Thomas Goirand <zigo@debian.org>  Wed, 04 Jan 2023 13:06:22 +0100
+
 python-logutils (0.3.3-8) unstable; urgency=medium
 
   * Add no-u-in-python3.9.patch (Closes: #997523).
